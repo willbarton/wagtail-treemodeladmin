@@ -1,6 +1,8 @@
+from django import VERSION as DJANGO_VERSION
 from django.contrib.admin.utils import unquote
 from django.db import models
 from django.shortcuts import get_object_or_404, redirect
+from django.utils.datastructures import MultiValueDict
 from django.utils.functional import cached_property
 from django.utils.translation import gettext as _
 
@@ -80,6 +82,13 @@ class TreeViewParentMixin:
 
 class TreeIndexView(TreeViewParentMixin, IndexView):
     def get_queryset(self, request=None):
+        # Workaround needed until wagtail-modeladmin merges
+        # https://github.com/wagtail-nest/wagtail-modeladmin/pull/55.
+        if DJANGO_VERSION >= (5, 0) and isinstance(
+            self.params, MultiValueDict
+        ):
+            self.params = dict(self.params.lists())
+
         qs = super().get_queryset(request=request)
 
         if self.parent_instance is not None:

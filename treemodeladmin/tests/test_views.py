@@ -17,7 +17,7 @@ class TestAuthorIndexView(TestCase, WagtailTestUtils):
     def test_author_listing(self):
         response = self.get()
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context["result_count"], 4)
+        self.assertEqual(response.context["result_count"], 5)
 
     def test_explore_link(self):
         response = self.get()
@@ -77,7 +77,7 @@ class TestBookIndexView(TestCase, WagtailTestUtils):
     def test_book_listing(self):
         response = self.get()
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context["result_count"], 4)
+        self.assertEqual(response.context["result_count"], 5)
 
     def test_book_listing_filtered(self):
         response = self.get(author=1)
@@ -85,6 +85,14 @@ class TestBookIndexView(TestCase, WagtailTestUtils):
         self.assertEqual(response.context["result_count"], 2)
         self.assertEqual(
             response.context["view"].get_page_title(), "J. R. R. Tolkien"
+        )
+
+    def test_book_listing_filtered_multiple_characters(self):
+        response = self.get(author=11)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context["result_count"], 1)
+        self.assertEqual(
+            response.context["view"].get_page_title(), "Kurt Vonnegut"
         )
 
     def test_book_listing_add_link_filtered(self):
