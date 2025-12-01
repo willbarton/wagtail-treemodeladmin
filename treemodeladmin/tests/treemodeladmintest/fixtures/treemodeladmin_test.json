@@ -28,6 +28,13 @@
         }
     },
     {
+        "pk": 11,
+        "model": "treemodeladmintest.author",
+        "fields": {
+            "name": "Kurt Vonnegut"
+        }
+    },
+    {
         "pk": 1,
         "model": "treemodeladmintest.book",
         "fields": {
@@ -57,6 +64,14 @@
         "fields": {
             "title": "The Chronicles of Narnia",
             "author_id": 3
+        }
+    },
+    {
+        "pk": 5,
+        "model": "treemodeladmintest.book",
+        "fields": {
+            "title": "Slaughterhouse-Five",
+            "author_id": 11
         }
     },
     {
